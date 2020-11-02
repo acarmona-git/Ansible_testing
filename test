@@ -1,0 +1,8 @@
+- name: Mi primer Playbook
+  become: true
+  vars:
+    - miip: "bookstack"
+  hosts: "{{ miip }}"
+  tasks:
+    - name: Copia de origen a destino ssh
+      copy: src=primerPlaybook.yml dest=/tmp
