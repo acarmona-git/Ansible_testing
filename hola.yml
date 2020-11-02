@@ -1,0 +1,11 @@
+---
+- name: Hola
+  hosts: all
+ 
+  tasks:
+  - name: print to stdout 
+    command: echo "hello" 
+    register: hello 
+  
+  - debug: msg="{{ hello.stdout }}"
+
