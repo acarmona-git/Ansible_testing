@@ -1,0 +1,6 @@
+- name: Mi primer Playbook
+  become: true
+  hosts: 192.168.0.1
+  tasks:
+    - name: Copia de origen a destino 
+      copy: src=/etc/hosts dest=/tmp
