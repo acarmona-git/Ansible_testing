@@ -1,0 +1,39 @@
+- hosts: All
+  become: True
+  vars:
+   lp_logrotate_confd:
+      - path: ansible
+        conf: |
+          /var/log/ansible.log {
+                 weekly
+                 rotate 3
+                 size 10M
+                 compress
+                 delaycompress
+          }
+      - path: test3
+        conf: |
+          /var/log/test.log {
+                 weekly
+                 rotate 2
+                 size 10M
+                 compress
+                 delaycompress
+          }
+  tasks:
+   - name: "Instalar log rotate"
+     apt: name=logrotate state=latest
+     when: ansible_os_family == "Debian"
+ 
+   - name: "Instalar log rotate"
+     apt: name=logrotate state=latest
+     when: ansible_os_family == "RedHat"
+     
+     
+   - name: "logrotate: Configure /etc/logrotate.d/"
+     blockinfile:
+         path: "/etc/logrotate.d/{{ item.path }}"
+         block: "{{ item.conf }}"
+         create: true
+         backup: true
+     loop: "{{ lp_logrotate_confd }}"
